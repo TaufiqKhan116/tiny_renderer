@@ -5,6 +5,23 @@ const Cw = canvas.width;
 const Ch = canvas.height;
 const pixelSize = 2
 
+function interpolate(i0, d0, i1, d1) {
+    if (i0 == i1) {
+        return [d0]
+    }
+
+    var values = []
+    var m = (d1 - d0) / (i1 - i0)
+    var d = d0
+
+    for (var i = i0; i <= i1; i++) {
+        values.push(d)
+        d += m
+    }
+
+    return [...values]
+}
+
 function putPixel(x, y, color) {
     var Sx = (Cw / 2) + x;
     var Sy = (Ch / 2) - y;
@@ -33,11 +50,11 @@ function drawLine(P0, P1, color) {
         var y1 = P1.y;
         var x0 = P0.x;
         var x1 = P1.x;
-        var m = dy/dx;
 
-        var y = y0;
-        for (var x = x0; x <= x1; x++, y+=m) {
-            putPixel(x, y, color);
+        ys = interpolate(x0, y0, x1, y1)
+
+        for (var x = x0; x <= x1; x++) {
+            putPixel(x, ys[x - x0], color);
         }
 
     } else {
@@ -56,11 +73,12 @@ function drawLine(P0, P1, color) {
         var y1 = P1.y;
         var x0 = P0.x;
         var x1 = P1.x;
-        var m = dx/dy;
 
-        var x = x0;
-        for (var y = y0; y <= y1; y++, x+=m) {
-            putPixel(x, y, color);
+
+        xs = interpolate(y0, x0, y1, x1)
+
+        for (var y = y0; y <= y1; y++) {
+            putPixel(xs[y - y0], y, color);
         }
     }
 }
