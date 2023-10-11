@@ -1,4 +1,5 @@
-import {putPixel, interPolate, drawLine } from './line.js'
+import {putPixel, interPolate, drawLine} from './line.js'
+import { drawwireframeTriangle, DrawFilledTriangle} from './triangle.js';
 
 // Get the canvas element and its 2D rendering context
 const canvas = document.getElementById('myCanvas');
@@ -12,7 +13,8 @@ var P2 = {x: 20, y: 200};
 drawLine({x: 200, y: 0}, {x: -200, y: 0}, "grey", context)
 drawLine({x: 0, y: -200}, {x: 0, y: 200}, "grey", context)
 
-// drawLine({x: 20, y: 50}, {x: 50, y: 100}, "red", context)
-drawLine(P0, P1, "blue", context)
-drawLine(P1, P2, "blue", context)
-drawLine(P2, P0, "Blue", context )
+// drawLine(P0, P1, "green", context)
+// drawLine(P1, P2, "red", context)
+// drawLine(P2, P0, "green", context)
+DrawFilledTriangle(P0, P1, P2, "pink", context)
+drawwireframeTriangle(P0, P1, P2, "grey", context)
